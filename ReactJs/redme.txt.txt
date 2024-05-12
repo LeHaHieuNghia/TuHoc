@@ -1,0 +1,1 @@
+Component là một khối lưu trữ khép kín có thể tái sử dụng dúp phân chia rõ ràng các chức năng bên trong dự án.
