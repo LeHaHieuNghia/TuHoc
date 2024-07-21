@@ -1,0 +1,285 @@
+
+
+NODE* GetNODE(Data x) {
+	NODE* p = new NODE;
+	if (p != NULL) {
+		p->info = x;
+		p->pNext = NULL;
+	}
+	return p;
+}
+
+void CreateList(LIST& l) {
+	l.pHead = l.pTail = NULL;
+}
+bool IsEmpty(LIST l) {
+
+	return l.pHead == nullptr ? true : false;
+}
+
+void AddHead(LIST& l, Data x) {
+	NODE* newELE = GetNODE(x);
+	if (newELE == NULL) {
+		cout << endl << "Khong du bo nho";
+		return;
+	}
+	if (IsEmpty(l)) {
+		l.pHead = l.pTail = newELE;
+	}
+	else
+	{
+		newELE->pNext = l.pHead;
+		l.pHead = newELE;
+	}
+}
+void AddTail(LIST& l, Data x) {
+	NODE* newELE = GetNODE(x);
+	if (newELE == NULL) {
+		cout << endl << "Khong du bo nho";
+		return;
+	}
+	if (IsEmpty(l)) {
+		AddHead(l, x);
+	}
+	else
+	{
+		l.pTail->pNext = newELE;
+		l.pTail = newELE;
+	}
+}
+void ChenTheoX(NODE* q, Data x) {
+	NODE* newELE = GetNODE(x);
+	if (newELE == NULL) {
+		cout << endl << "Khong du bo nho";
+		return;
+	}
+	newELE->pNext = q->pNext;
+	q->pNext = newELE;
+}
+
+int NhapTuFile(const char* file, LIST& l) {
+	ifstream in(file);
+	if (!in) {
+		cout << endl << "Khong the mo file";
+		return 0;
+	}
+	Data x;
+	CreateList(l);
+	while (!in.eof())
+	{
+		in >> x.MaNV;
+		in >> x.Ho;
+		in >> x.TenLot;
+		in >> x.Ten;
+		in >> x.NamSinh;
+		in >> x.HeSoLuong;
+		AddTail(l, x);
+	}
+	return 1;
+}
+
+void XuatThanhNgang() {
+	int n = 64, i = 0;
+	cout << endl;
+	cout << ":";
+	for (i; i < n; i++) {
+		cout << "=";
+	}
+	cout << ":";
+}
+void XuatTieuDe() {
+	cout << endl;
+	cout << setiosflags(ios::left);
+	cout << ":"
+		<< setw(8) << "MaNV"
+		<< ":"
+		<< setw(10) << "Ho"
+		<< ":"
+		<< setw(10) << "Ten Lot"
+		<< ":"
+		<< setw(10) << "Ten"
+		<< ":"
+		<< setw(10) << "Nam sinh"
+		<< ":"
+		<< setw(10) << "HeSoLuong"
+		<< ":";
+}
+void Xuat1NhanVien(Data x) {
+	cout << endl;
+	cout << setiosflags(ios::left);
+	cout << ":"
+		<< setw(8) << x.MaNV
+		<< ":"
+		<< setw(10) << x.Ho
+		<< ":"
+		<< setw(10) << x.TenLot
+		<< ":"
+		<< setw(10) << x.Ten
+		<< ":"
+		<< setw(10) << x.NamSinh
+		<< ":"
+		<< setw(10) << x.HeSoLuong
+		<< ":";
+}
+void XuatDanhSach(LIST l) {
+	if (IsEmpty(l)) {
+		cout << endl << "Danh sach rong";
+		return;
+	}
+	NODE* p = l.pHead;
+	XuatThanhNgang();
+	XuatTieuDe();
+	while (p != NULL)
+	{
+		Xuat1NhanVien(p->info);
+		p = p->pNext;
+	}
+	XuatThanhNgang();
+}
+int DemSoLuong(LIST l, float heso) {
+	if (IsEmpty(l)) {
+		cout << endl << "Danh sach rong";
+		return -1;
+	}
+	int dem = 0;
+	NODE* p = l.pHead;
+	while (p != NULL)
+	{
+		if (p->info.HeSoLuong >= heso) {
+			dem++;
+		}
+		p = p->pNext;
+	}
+	return dem;
+}
+NODE* TimKiemTraVeNodeCuoiCung(LIST l, char ten[10]) {
+	NODE* q = NULL;
+	if (IsEmpty(l)) {
+		return q;
+	}
+	NODE* p = l.pHead;
+	while (p != NULL)
+	{
+		if (strcmp(p->info.Ten, ten) == 0) {
+			q = p;
+		}
+		p = p->pNext;
+	}
+	return q;
+}
+
+NODE* TimKiemTraVeNodeX(LIST l, char maSo[8]) {
+	NODE* q = NULL;
+	if (IsEmpty(l)) {
+		return q;
+	}
+	NODE* p = l.pHead;
+	while (p != NULL)
+	{
+		if (strcmp(p->info.MaNV, maSo) == 0) {
+			q = p;
+			break;
+		}
+		p = p->pNext;
+	}
+	return q;
+}
+NODE* TimKiemTraVeNodeTruocX(LIST l, char maSo[8]) {
+	NODE* q = NULL;
+	if (IsEmpty(l)) {
+		return q;
+	}
+	NODE* p = l.pHead;
+	while (p != NULL)
+	{
+		if (strcmp(p->pNext->info.MaNV, maSo) == 0) {
+			q = p;
+			break;
+		}
+		p = p->pNext;
+	}
+	return q;
+}
+NODE* TimKiemTraVeNodeSauX(LIST l, char maSo[8]) {
+	NODE* q = NULL;
+	if (IsEmpty(l)) {
+		return q;
+	}
+	NODE* p = l.pHead;
+	while (p != NULL)
+	{
+		if (strcmp(p->info.MaNV, maSo) == 0) {
+			q = p->pNext;
+			break;
+		}
+		p = p->pNext;
+	}
+	return q;
+}
+void Xoa1NhanVien(LIST& l, NODE* q) {
+	if (l.pHead == q) {
+		l.pHead = l.pHead->pNext;
+		if (l.pHead == nullptr) {
+			l.pTail = nullptr;
+		}
+		delete q;
+		return;
+	}
+	NODE* p = l.pHead;
+	while (p!=NULL&&p->pNext!=q)
+	{
+		p = p->pNext;
+	}
+	if (p != NULL) {
+		p->pNext = q->pNext;
+		if (q == l.pTail) {
+			l.pTail = p;
+		}
+		delete q;
+	}
+}
+void XoaNhanVienTheoTen(LIST& l, char ten[10]) {
+	if (IsEmpty(l)) {
+		return;
+	}
+	NODE* p = l.pHead;
+	while (p!=NULL)
+	{
+		
+		if (strcmp(p->info.Ten, ten) == 0) {
+			NODE* q = p;
+			p = p->pNext;
+			Xoa1NhanVien(l,q);
+		}
+		else
+		{
+			p = p->pNext;
+		}
+	}
+}
+void HoanVi(Data& x, Data& y) {
+	Data temp = x;
+	x = y;
+	y = temp;
+}
+void SapXepTangTheoNamSinh(LIST& l) {
+	if (IsEmpty(l)) {
+		return;
+	}
+	NODE* p = l.pHead;
+	while (p != NULL)
+	{
+		NODE* min = p;
+		NODE* q = p->pNext;
+		while (q != NULL)
+		{
+
+			if (q->info.NamSinh < min->info.NamSinh) {
+				min = q;
+			}
+			q = q->pNext;
+		}
+		HoanVi(p->info, min->info);
+		p = p->pNext;
+	}
+}
