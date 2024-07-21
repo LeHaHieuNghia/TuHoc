@@ -1,0 +1,63 @@
+enum Menu {
+	nhapfile = 1,
+	xuatfile = 2,
+	indskha = 3,
+	timtheoma = 4,
+	chentruocma = 5,
+	xoatheolop = 6,
+
+};
+
+
+void XuatMenu() {
+	cout << endl << "=============================MENU=================================";
+	cout << endl << "cau1: nhap danh sach tu file";
+	cout << endl << "cau2: xuat danh sach tu file";
+	cout << endl << "cau3: in danh sach kha tro len";
+	cout << endl << "cau4: tim theo ma hoc sinh tra ve node dau tien";
+	cout << endl << "cau5: chen hoc sinh truoc ma hoc sinh";
+	cout << endl << "cau6: xoa tat ca cac lop";
+	cout << endl << "==============================END==================================";
+}
+
+
+void XuLyMenu(int chon, List& l) {
+
+	
+	Data x;
+	switch (chon)
+	{
+	case Menu::nhapfile:
+		cout  << "nhap file";
+		Importfile("Text.txt", l);
+		break;
+	case Menu::xuatfile:
+		cout << endl << "xuat file";
+		XuatDs(l);
+		break;
+	default:
+		break;
+	}
+}
+
+void ChonMenu() {
+	int chon;
+	List l;
+	int somenu = Menu::xoatheolop;
+	do
+	{
+		system("cls");
+		XuatMenu();	
+		cout << endl << "chon[0..." << somenu << "] de thuc hien chuc nang";
+		cin >> chon;
+		while (chon < 0 || chon > somenu) {
+			cout << endl << "chon[0..." << somenu << "] de thuc hien chuc nang";
+			cin >> chon;
+		}
+		XuLyMenu(chon, l);
+		cout << endl;
+		system("pause");
+	} while (chon);
+
+}
+
