@@ -1,63 +1,84 @@
-enum Menu {
-	nhapfile = 1,
-	xuatfile = 2,
-	indskha = 3,
-	timtheoma = 4,
-	chentruocma = 5,
-	xoatheolop = 6,
-
-};
-
-
-void XuatMenu() {
-	cout << endl << "=============================MENU=================================";
-	cout << endl << "cau1: nhap danh sach tu file";
-	cout << endl << "cau2: xuat danh sach tu file";
-	cout << endl << "cau3: in danh sach kha tro len";
-	cout << endl << "cau4: tim theo ma hoc sinh tra ve node dau tien";
-	cout << endl << "cau5: chen hoc sinh truoc ma hoc sinh";
-	cout << endl << "cau6: xoa tat ca cac lop";
-	cout << endl << "==============================END==================================";
-}
-
-
-void XuLyMenu(int chon, List& l) {
-
-	
-	Data x;
+void XuLyMenu(int chon, LIST& l) {
+	int kq_dem;
+	char ten_tim[10];
+	char maNV_tim[8];
+	NODE* kq_tim;
+	Data newNV;
 	switch (chon)
 	{
-	case Menu::nhapfile:
-		cout  << "nhap file";
-		Importfile("Text.txt", l);
+	case MENU::Nhap:
+		cout << endl << "1. Nhập danh sách nhân viên từ file.";
+		NhapTuFile("nhanvien.txt", l);
 		break;
-	case Menu::xuatfile:
-		cout << endl << "xuat file";
-		XuatDs(l);
+	case MENU::Xuat:
+		cout << endl << "2. Xuất danh sách nhân viên.";
+		XuatDanhSach(l);
+
+		break;
+	case MENU::Dem:
+		cout << endl << "3. Đếm số lượng nhân viên có hệ số lương >= 3.4.";
+		kq_dem = DemSoLuong(l, 3.4);
+		cout << endl << "So luong nhan vien co he so luong lon hon 3.4 = " << kq_dem;
+		break;
+	case MENU::Tim:
+		XuatDanhSach(l);
+		cout << endl << "4. Tìm kiếm tuyến tính: theo tên nhân viên, trả về node cuối cùng.";
+		cout << endl << "Nhap ten can tim: ";
+		cin >> ten_tim;
+		kq_tim = TimKiemTraVeNodeCuoiCung(l, ten_tim);
+		if (kq_tim == NULL)
+		{
+			cout << endl << "Khong tim thay nhan vien nao co ten " << ten_tim;
+			break;
+		}
+		cout << endl;
+		Xuat1NhanVien(kq_tim->info);
+		break;
+	case MENU::Chen:
+		XuatDanhSach(l);
+		cout << endl << "5. Chèn 1 nhân viên sau nhân viên có mã nhân viên=x (x nhập từ bàn phím).";
+		cout << endl << "Nhap ma nhan vien can chen sau: ";
+		cin >> maNV_tim;
+		kq_tim = TimKiemTraVeNodeX(l, maNV_tim);
+		if (kq_tim == NULL)
+		{
+			cout << endl << "Khong tim thay nhan vien nao co ma " << maNV_tim;
+			break;
+		}
+		cout << endl << "Nhap thong tin nhan vien";
+
+		cout << endl << "Nhap ma nhan vien moi: ";
+		cin >> newNV.MaNV;
+		cout << endl << "Nhap ho nhan vien moi: ";
+		cin >> newNV.Ho;
+		cout << endl << "Nhap ten lot nhan vien moi: ";
+		cin >> newNV.TenLot;
+		cout << endl << "Nhap ten nhan vien moi: ";
+		cin >> newNV.Ten;
+		cout << endl << "Nhap nam sinh nhan vien moi: ";
+		cin >> newNV.NamSinh;
+		cout << endl << "Nhap he so luong nhan vien moi: ";
+		cin >> newNV.HeSoLuong;
+		ChenTheoX(kq_tim, newNV);
+		cout << endl << "Danh sach sau khi thay doi";
+		XuatDanhSach(l);
+		break;
+	case MENU::Xoa:
+		cout << endl << "6. Xóa tất cả nhân viên theo tên nhân viên.";
+		cout << endl << "Nhap ten can xoa: ";
+		cin >> ten_tim;
+		XoaNhanVienTheoTen(l, ten_tim);
+		cout << endl << "Danh sach sau khi thay doi";
+		XuatDanhSach(l);
+		break;
+		
+	case MENU::SapXep:
+		cout << endl << "7. Dùng thuật giải chọn trực tiếp sắp danh sách tăng dần theo năm sinh.";
+		SapXepTangTheoNamSinh(l);
+		cout << endl << "Danh sach sau khi thay doi";
+		XuatDanhSach(l);
 		break;
 	default:
 		break;
 	}
 }
-
-void ChonMenu() {
-	int chon;
-	List l;
-	int somenu = Menu::xoatheolop;
-	do
-	{
-		system("cls");
-		XuatMenu();	
-		cout << endl << "chon[0..." << somenu << "] de thuc hien chuc nang";
-		cin >> chon;
-		while (chon < 0 || chon > somenu) {
-			cout << endl << "chon[0..." << somenu << "] de thuc hien chuc nang";
-			cin >> chon;
-		}
-		XuLyMenu(chon, l);
-		cout << endl;
-		system("pause");
-	} while (chon);
-
-}
-
