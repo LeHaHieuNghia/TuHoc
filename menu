@@ -82,3 +82,25 @@ void XuLyMenu(int chon, LIST& l) {
 		break;
 	}
 }
+
+
+void ChonMenu() {
+	int chon;
+	LIST l;
+	int soMenu = MENU::SapXep;
+	do
+	{
+		system("cls");		
+	XuatMenu();
+	cout << endl << "Nhap [0.." << soMenu << "] de thuc hien chuc nang: ";
+	cin >> chon;
+		while (chon<0 || chon>soMenu)
+		{
+			cout << endl << "Nhap [0.." << soMenu << "] de thuc hien chuc nang: ";
+			cin >> chon;
+		}
+		XuLyMenu(chon, l);
+		cout << endl;
+		system("pause");
+	} while (chon);
+}
