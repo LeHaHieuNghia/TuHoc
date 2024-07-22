@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace todo2
+{
+    internal class TapChi:AnPham
+    {
+        public TapChi(string ten, string nhaxuatban, double giatien, string diachi)
+        {
+            this.DiaChi = diachi;
+            this.GiaTien = giatien;
+            this.NhaXuatBan = nhaxuatban;
+            this.Ten = ten;
+
+        }
+
+        public string DiaChi
+        {
+            get;set;
+        }
+
+        public override void Xuat()
+        {
+            Console.WriteLine($"xuat thong tin Tap Chi {Ten},{NhaXuatBan}, {GiaTien}, {DiaChi}");
+        }
+    }
+}
