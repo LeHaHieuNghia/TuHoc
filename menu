@@ -1,106 +1,113 @@
-void XuLyMenu(int chon, LIST& l) {
-	int kq_dem;
-	char ten_tim[10];
-	char maNV_tim[8];
-	NODE* kq_tim;
-	Data newNV;
-	switch (chon)
-	{
-	case MENU::Nhap:
-		cout << endl << "1. Nhập danh sách nhân viên từ file.";
-		NhapTuFile("nhanvien.txt", l);
-		break;
-	case MENU::Xuat:
-		cout << endl << "2. Xuất danh sách nhân viên.";
-		XuatDanhSach(l);
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-		break;
-	case MENU::Dem:
-		cout << endl << "3. Đếm số lượng nhân viên có hệ số lương >= 3.4.";
-		kq_dem = DemSoLuong(l, 3.4);
-		cout << endl << "So luong nhan vien co he so luong lon hon 3.4 = " << kq_dem;
-		break;
-	case MENU::Tim:
-		XuatDanhSach(l);
-		cout << endl << "4. Tìm kiếm tuyến tính: theo tên nhân viên, trả về node cuối cùng.";
-		cout << endl << "Nhap ten can tim: ";
-		cin >> ten_tim;
-		kq_tim = TimKiemTraVeNodeCuoiCung(l, ten_tim);
-		if (kq_tim == NULL)
-		{
-			cout << endl << "Khong tim thay nhan vien nao co ten " << ten_tim;
-			break;
-		}
-		cout << endl;
-		Xuat1NhanVien(kq_tim->info);
-		break;
-	case MENU::Chen:
-		XuatDanhSach(l);
-		cout << endl << "5. Chèn 1 nhân viên sau nhân viên có mã nhân viên=x (x nhập từ bàn phím).";
-		cout << endl << "Nhap ma nhan vien can chen sau: ";
-		cin >> maNV_tim;
-		kq_tim = TimKiemTraVeNodeX(l, maNV_tim);
-		if (kq_tim == NULL)
-		{
-			cout << endl << "Khong tim thay nhan vien nao co ma " << maNV_tim;
-			break;
-		}
-		cout << endl << "Nhap thong tin nhan vien";
+namespace todo2
+{
+    internal class DSAnPham
+    {
+        public List<AnPham> danhsachanpham = new List<AnPham> ();
 
-		cout << endl << "Nhap ma nhan vien moi: ";
-		cin >> newNV.MaNV;
-		cout << endl << "Nhap ho nhan vien moi: ";
-		cin >> newNV.Ho;
-		cout << endl << "Nhap ten lot nhan vien moi: ";
-		cin >> newNV.TenLot;
-		cout << endl << "Nhap ten nhan vien moi: ";
-		cin >> newNV.Ten;
-		cout << endl << "Nhap nam sinh nhan vien moi: ";
-		cin >> newNV.NamSinh;
-		cout << endl << "Nhap he so luong nhan vien moi: ";
-		cin >> newNV.HeSoLuong;
-		ChenTheoX(kq_tim, newNV);
-		cout << endl << "Danh sach sau khi thay doi";
-		XuatDanhSach(l);
-		break;
-	case MENU::Xoa:
-		cout << endl << "6. Xóa tất cả nhân viên theo tên nhân viên.";
-		cout << endl << "Nhap ten can xoa: ";
-		cin >> ten_tim;
-		XoaNhanVienTheoTen(l, ten_tim);
-		cout << endl << "Danh sach sau khi thay doi";
-		XuatDanhSach(l);
-		break;
-		
-	case MENU::SapXep:
-		cout << endl << "7. Dùng thuật giải chọn trực tiếp sắp danh sách tăng dần theo năm sinh.";
-		SapXepTangTheoNamSinh(l);
-		cout << endl << "Danh sach sau khi thay doi";
-		XuatDanhSach(l);
-		break;
-	default:
-		break;
-	}
+        public DSAnPham(List<AnPham> danhsachanpham)
+        {
+
+        }
+
+        public DSAnPham()
+        {
+
+        }
+
+        public void NhapCoDinh()
+        {
+            danhsachanpham.Add(new Sach("kien lang thang", "le nghia", 10000, 100));
+            danhsachanpham.Add(new Sach("kien lang thang", "le nghia", 20000, 200));
+            danhsachanpham.Add(new Sach("kien lang thang", "le nghia", 30000, 10));
+            danhsachanpham.Add(new TapChi("kien lang thang", "le nghia", 20000, "da lat"));
+            danhsachanpham.Add(new TapChi("kien lang thang", "le nghia", 30000, "da lat"));
+            danhsachanpham.Add(new TapChi("kien lang thang", "le nghia", 40000, "Gia lai"));
+            danhsachanpham.Add(new TapChi("kien lang thang", "le nghia", 50000, "da lat"));
+            danhsachanpham.Add(new TapChi("kien lang thang", "le nghia", 40000, "da lat"));
+            danhsachanpham.Add(new Sach("kien lang thang", "le nghia", 20000, 10));
+            danhsachanpham.Add(new Sach("kien lang thang", "le nghia", 20000, 10));
+            danhsachanpham.Add(new Sach("kien lang thang", "le nghia", 20000, 10));
+        }
+
+        public void XuatThongTin()
+        {
+            foreach (var item in danhsachanpham)
+            {
+                item.Xuat();
+            }
+        }
+
+        public List<AnPham> TimTheox(double gia)
+        {
+            List<AnPham> kq = new List<AnPham>();
+            foreach (var item in danhsachanpham)
+            {
+                if(item.GiaTien > gia)
+                {
+                    kq.Add(item);
+                }
+            }
+            return kq;
+
+        }
+
+        public AnPham TimAnPhamMin()
+        {
+           
+            double min = 10000000000;
+            foreach (var item in danhsachanpham)
+            {
+                if(item.GiaTien < min)
+                {
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public Sach TimSachCoNhieuTrangNhat()
+        {
+            Sach kq = null;
+            int trang = 0;
+            foreach (var item in danhsachanpham)
+            {
+                if (item is Sach sach)
+                {
+                    if(sach.SoTrang > trang)
+                    {
+                        trang = sach.SoTrang;
+                        kq = sach;
+                    }
+
+                }
+            }
+            return kq;
+        }
+
+        public List<TapChi> TimTapChiTaiX(string x)
+        {
+            List<TapChi> kq = new List<TapChi>();
+
+            foreach (var item in danhsachanpham)
+            {
+                if(item is TapChi tapchi)
+                {
+                    if (String.Compare(tapchi.DiaChi, x)== 0)
+                    {
+                        kq.Add((TapChi)item);
+                    }
+                }
+            }
+            return kq;
+        }
+
+       
+    }
 }
 
-
-void ChonMenu() {
-	int chon;
-	LIST l;
-	int soMenu = MENU::SapXep;
-	do
-	{
-		system("cls");		
-	XuatMenu();
-	cout << endl << "Nhap [0.." << soMenu << "] de thuc hien chuc nang: ";
-	cin >> chon;
-		while (chon<0 || chon>soMenu)
-		{
-			cout << endl << "Nhap [0.." << soMenu << "] de thuc hien chuc nang: ";
-			cin >> chon;
-		}
-		XuLyMenu(chon, l);
-		cout << endl;
-		system("pause");
-	} while (chon);
-}
