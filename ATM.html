@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body >
+ 
+    <div style="width: 300px; margin: auto;" >
+        <h3 style="text-align: center;">Đăng nhập</h3>
+        <ul class="input",  style="list-style: none; display: contents; margin: 0;">
+            <li style="margin: 0;">
+                <h4 style="margin: 0;">Name<input id="name", type="email", style="display: block;"></h4>
+                <label id="labelname" style="opacity: 0; color: red;"> email không hợp lệ</label>
+            </li>
+            <li style="margin: 0; margin-top: 5px;">
+                <h4 style="margin: 0;">Passwork<input id="passwork" type="password"  style="display: block;"></h4>
+                <label id="lablepasswork",  style="opacity: 0; color: red; ";>mật khẩu tối đa 8 ký tự</label>
+            </li>
+        </ul>
+        <button id="button" onclick="Login()" style="font-size: 20px; height: 30px;"> Login</button>
+    </div>
+    <script>
+        function Login(){
+            const email = document.getElementById("name").value;
+            const Passwork= document.getElementById("passwork").value;
+
+            const emailinvalid = document.getElementById("labelname");
+            const passworkinvalid = document.getElementById("lablepasswork");
+
+      
+
+            if (email.includes("@") && Passwork.length <=8 ){
+                emailinvalid.style.opacity = 0;
+                passworkinvalid.style.opacity = 0;
+                window.alert("successfull")
+            }
+            else{
+                emailinvalid.style.opacity = 1;
+                passworkinvalid.style.opacity = 1;
+            }
+
+            
+        }
+    </script>
+</body>
+</html>
